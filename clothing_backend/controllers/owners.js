@@ -1,5 +1,6 @@
 const pool = require('../database/db');
-
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const getOwners = async (req, res) => {
   try {
@@ -14,8 +15,9 @@ const getOwners = async (req, res) => {
 const createOwner = async (req, res) => {
   const {f_name, l_name, email} = req.body;
   try {
-    const createPerson = await pool.query("INSERT INTO owner (f_name, l_name, email) \
-      VALUES($1, $2, $3) RETURNING *", [f_name, l_name, email]);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const createPerson = await pool.query("INSERT INTO owner (f_name, l_name, email, password) \
+      VALUES($1, $2, $3, $4) RETURNING *", [f_name, l_name, email, hashedPassword]);
 
     res.json(createPerson.rows[0]);
   } catch (err) {
@@ -51,4 +53,25 @@ const deleteOwner = async (req, res) => {
   }
 };
 
-module.exports = {getOwners, createOwner, updateOwner, deleteOwner}
+const ownerLogin = async (req, res) => {
+  const ownerEmail = req.body.email;
+  const ownerInfo = await pool.query("SELECT email, password FROM owner WHERE email=$1", [ownerEmail]);
+  if (ownerInfo.rowCount < 1) return res.status(400).send('Cannot find user');
+
+  try {
+    if (await bcrypt.compare(req.body.password, ownerInfo.rows[0].password)) {
+      const accessToken = generateAccessToken(ownerEmail);
+      const refreshToken = jwt.sign({username: ownerEmail}, process.env.REFRESH_TOKEN_SECRET);
+      res.json({ accessToken: accessToken, refreshToken: refreshToken });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send();
+  }
+};
+
+function generateAccessToken(username) {
+  return jwt.sign({username: username}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+}
+
+module.exports = {getOwners, createOwner, updateOwner, deleteOwner, ownerLogin}
