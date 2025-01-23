@@ -5,23 +5,24 @@ const app = express();
 const cors = require('cors')
 // const pool = require('./database/db');
 const PORT = 3000;
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 const owners = require('./routes/owners');
 const locations = require('./routes/locations');
 const clothing = require('./routes/clothing');
 
-const authenticateToken = (req, res, next) => {
-  console.log(req.headers);
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  if (!token) return res.sendStatus(401);
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-}
+// const authenticateToken = (req, res, next) => {
+//   console.log(req.headers);
+//   const authHeader = req.headers['authorization'];
+//   const token = authHeader && authHeader.split(' ')[1];
+//   if (!token) return res.sendStatus(401);
+//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//     if (err) return res.sendStatus(403);
+//     console.log(user);
+//     req.user = user;
+//     next();
+//   });
+// };
 
 app.use(cors());
 app.use(express.json());

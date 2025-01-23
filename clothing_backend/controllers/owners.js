@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 
 const getOwners = async (req, res) => {
   try {
-    const allPeople = await pool.query("SELECT * FROM owner");
-    console.log(allPeople.rows);
-    res.json(allPeople.rows);
+    const authorizedOwner = await pool.query("SELECT f_name, l_name, email FROM owner WHERE email=$1", [req.user.username]);
+    console.log(authorizedOwner.rows);
+    res.json(authorizedOwner.rows);
   } catch (err) {
     console.error(err.message);
   }
@@ -26,11 +26,10 @@ const createOwner = async (req, res) => {
 };
 
 const updateOwner = async (req, res) => {
-  const {id} = req.params;
   const {f_name, l_name, email} = req.body;
   try {
     const updateOwner = await pool.query("UPDATE owner \
-      SET f_name=$1, l_name=$2, email=$3 WHERE owner_id=$4", [f_name, l_name, email, id]);
+      SET f_name=$1, l_name=$2, email=$3 WHERE email=$4", [f_name, l_name, email, req.user.username]);
 
     if (updateOwner.rowCount === 0) {
       res.status(404).json({"error": "The owner you attempted to update does not exist"});
@@ -43,9 +42,9 @@ const updateOwner = async (req, res) => {
 };
 
 const deleteOwner = async (req, res) => {
-  const {id} = req.params;
+  // const {id} = req.params;
   try {
-    const deleteOwner = await pool.query("DELETE FROM owner WHERE owner_id=$1", [id]);
+    const deleteOwner = await pool.query("DELETE FROM owner WHERE email=$1", [req.user.username]);
     
     res.json({"message": "Owner has been deleted"});
   } catch (err) {

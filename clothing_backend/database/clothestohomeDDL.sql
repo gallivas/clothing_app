@@ -73,11 +73,13 @@ CREATE TABLE clothing (
 
 -- LOCK TABLE clothing IN EXCLUSIVE MODE;
 -- INSERT INTO clothing (clothing_name, clothing_category, clothing_condition, clothing_description, clothing_photo, clothing_brand, location_id, owner_id)
--- VALUES ('Green Jacket', 'Outerwear', 'Good', 'Green jacket with hood and many pockets', 'jacket-photo-url.jpg', 'Columbia', 'location-uuid', 'owner-uuid');
--- VALUES ('Brown Shacket', 'Outerwear', 'Good', 'Fuzzy brown shacket with click buttons and two pockets', 'shacket-photo-url.jpg', 'Toad & Co', 'location-uuid', 'owner-uuid');
--- VALUES ('Hiking Boots', 'Shoes', 'Good', 'Small hole on little toe of one boot', 'boots-photo-url.jpg', 'Columbia', 'location-uuid', 'owner-uuid');
--- VALUES ('Hoka Trail Running Shoes', 'Shoes', 'Good', 'Pink and purple', 'hoka-photo-url.jpg', 'Hoka', 'location-uuid', 'owner-uuid');
+-- VALUES ('Green Jacket', 'Outerwear', 'Good', 'Green jacket with hood and many pockets', 'jacket-photo-url.jpg', 'Columbia', '153fe813-c223-4331-9210-68964cf18103', 'b9ec6d56-ebe0-40ba-ab2c-b6fbb20291a9');
+-- INSERT INTO clothing (clothing_name, clothing_category, clothing_condition, clothing_description, clothing_photo, clothing_brand, location_id, owner_id)
+-- VALUES ('Brown Shacket', 'Outerwear', 'Good', 'Fuzzy brown shacket with click buttons and two pockets', 'shacket-photo-url.jpg', 'Toad & Co', 'beb8c174-c320-4fdd-9791-db7b0a00fa31', 'b9ec6d56-ebe0-40ba-ab2c-b6fbb20291a9');
+-- INSERT INTO clothing (clothing_name, clothing_category, clothing_condition, clothing_description, clothing_photo, clothing_brand, location_id, owner_id)
+-- VALUES ('Hiking Boots', 'Shoes', 'Good', 'Small hole on little toe of one boot', 'boots-photo-url.jpg', 'Columbia', '153fe813-c223-4331-9210-68964cf18103', 'b9ec6d56-ebe0-40ba-ab2c-b6fbb20291a9');
+-- INSERT INTO clothing (clothing_name, clothing_category, clothing_condition, clothing_description, clothing_photo, clothing_brand, location_id, owner_id)
+-- VALUES ('Hoka Trail Running Shoes', 'Shoes', 'Good', 'Pink and purple', 'hoka-photo-url.jpg', 'Hoka', 'f8110dc5-7515-41a8-a0e6-21f55daf7e86', 'bad3115d-42ef-4250-9365-91877a17bdea');
+-- INSERT INTO clothing (clothing_name, clothing_category, clothing_condition, clothing_description, clothing_photo, clothing_brand, location_id, owner_id)
+-- VALUES ('Ariat Cowboy Boots', 'Shoes', 'Good', 'Brown with flat toe', 'ariat-photo-url.jpg', 'Ariat', 'f8110dc5-7515-41a8-a0e6-21f55daf7e86', '1ad6aea4-d8ce-4d2b-8937-87517e442a83');
 -- UNLOCK TABLE;
-
-INSERT INTO clothing (item_name, item_category, item_condition, item_description, item_photo, item_brand, location_id, owner_id)
-VALUES ('Hiking Boots', 'Shoes', 'Good', 'Small hole on little toe of one boot', 'photo-url.jpg', 'Columbia', '573c6cf8-cded-411f-8ae7-134967fcfdf8', '78c96b8f-bc81-4b76-9a32-0fd3354b28d9');
